@@ -1,0 +1,113 @@
+# Reading C:/intelFPGA_lite/17.0/modelsim_ase/tcl/vsim/pref.tcl
+do runlab.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:15 on Aug 15,2022
+# vlog -reportprogress 300 ./counter.sv 
+# -- Compiling module counter
+# -- Compiling module counter_testbench
+# 
+# Top level modules:
+# 	counter_testbench
+# End time: 13:36:15 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:15 on Aug 15,2022
+# vlog -reportprogress 300 ./gameplay.sv 
+# -- Compiling module gameplay
+# -- Compiling module gameplay_testbench
+# 
+# Top level modules:
+# 	gameplay_testbench
+# End time: 13:36:15 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:15 on Aug 15,2022
+# vlog -reportprogress 300 ./decoder.sv 
+# -- Compiling module decoder
+# -- Compiling module decoder_testbench
+# 
+# Top level modules:
+# 	decoder_testbench
+# End time: 13:36:15 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:15 on Aug 15,2022
+# vlog -reportprogress 300 ./dotController.sv 
+# -- Compiling module dotController
+# -- Compiling module dotController_testbench
+# 
+# Top level modules:
+# 	dotController_testbench
+# End time: 13:36:15 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:15 on Aug 15,2022
+# vlog -reportprogress 300 ./loadGame.sv 
+# -- Compiling module loadGame
+# -- Compiling module loadGame_testbench
+# 
+# Top level modules:
+# 	loadGame_testbench
+# End time: 13:36:15 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:16 on Aug 15,2022
+# vlog -reportprogress 300 ./LEDDriver.sv 
+# -- Compiling module LEDDriver
+# -- Compiling module LEDDriver_Test
+# -- Compiling module LEDDriver_TestPhysical
+# 
+# Top level modules:
+# 	LEDDriver_Test
+# 	LEDDriver_TestPhysical
+# End time: 13:36:16 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:16 on Aug 15,2022
+# vlog -reportprogress 300 ./DE1_SoC.sv 
+# -- Compiling module DE1_SoC
+# -- Compiling module DE1_SoC_testbench
+# 
+# Top level modules:
+# 	DE1_SoC_testbench
+# End time: 13:36:16 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:36:16 on Aug 15,2022
+# vlog -reportprogress 300 ./doubleFF.sv 
+# -- Compiling module doubleFF
+# -- Compiling module middle
+# -- Compiling module doubleFF_testbench
+# 
+# Top level modules:
+# 	doubleFF
+# 	doubleFF_testbench
+# End time: 13:36:16 on Aug 15,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -voptargs=""+acc"" -t 1ps -lib work DE1_SoC_testbench 
+# Start time: 13:36:16 on Aug 15,2022
+# Loading sv_std.std
+# Loading work.DE1_SoC_testbench
+# Loading work.DE1_SoC
+# Loading work.clock_divider
+# Loading work.LEDDriver
+# Loading work.doubleFF
+# Loading work.middle
+# Loading work.loadGame
+# Loading work.decoder
+# Loading work.dotController
+# Loading work.mux2_1
+# Loading work.gameplay
+# Loading work.counter
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Daniel  Hostname: ARMADS  ProcessID: 21760
+#           Attempting to use alternate WLF file "./wlftcdzf1d".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftcdzf1d
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+# ** Note: $stop    : ./DE1_SoC.sv(131)
+#    Time: 4750 ps  Iteration: 1  Instance: /DE1_SoC_testbench
+# Break in Module DE1_SoC_testbench at ./DE1_SoC.sv line 131

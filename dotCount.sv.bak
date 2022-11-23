@@ -1,0 +1,41 @@
+module counter (neighbor, count);
+ input logic [7:0] neighbor;
+ output logic [1:0] count;
+ 
+ logic [2:0] number;
+ 
+ assign number = neighbor[0] + neighbor[1] + neighbor[2] + neighbor[3]
+               + neighbor[4] + neighbor[5] + neighbor[6] + neighbor[7];
+ 
+ assign count = ~number[2] ? number[1:0] : 2'b00;
+
+endmodule 
+  
+module counter_testbench();
+  logic [7:0] neighbor;
+  logic [1:0] count;
+  logic CLOCK_50;
+  
+  counter dut (.neighbor, .count);
+  
+  parameter CLOCK_PERIOD = 100;
+  initial begin
+	 CLOCK_50 <= 0;
+	 forever #(CLOCK_PERIOD / 2)
+	 CLOCK_50 <= ~CLOCK_50;
+  end
+  
+  initial begin
+   															@(posedge CLOCK_50);
+	neighbor <= 8'b00000010;  							@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	neighbor <= 8'b00000001;  							@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	neighbor <= 8'b00000011;  							@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	neighbor <= 8'b00000100;  							@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	neighbor <= 8'b00001111;  							@(posedge CLOCK_50);
+	$stop;
+	end
+endmodule

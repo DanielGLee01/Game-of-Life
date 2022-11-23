@@ -1,0 +1,6 @@
+module loadGame (Clock, Reset, KEY, SW, DOT);
+ input logic Clock;
+ input logic Reset;
+ input logic 	[3:0] KEY; // True when not pressed, False when pressed
+ input logic 	[9:0] SW;
+ output logic DOT [15:0] [15:0];

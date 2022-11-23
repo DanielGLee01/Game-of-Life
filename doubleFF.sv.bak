@@ -1,0 +1,15 @@
+module doubleFF (Clock, Reset, key, stableout);
+ input logic Clock, Reset;
+ input logic key;
+ output logic wireout;
+
+ logic out;
+
+	always_ff @(posedge Clock) begin
+		out <= key;
+	end
+	
+	always_ff @(posedge Clock) begin
+		stableout <= out;
+	end
+endmodule

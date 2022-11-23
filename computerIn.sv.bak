@@ -1,0 +1,41 @@
+module compButton(Clock, Reset, Q, SW, out);
+	output logic out;
+	input logic Clock, Reset;
+	input logic [9:0] Q;
+	input logic [8:0] SW;
+	
+	logic [9:0] SW_extend;
+	
+	assign SW_extend = {1'b0, SW}; 
+	
+	comparator computer(.Clock, .Reset, .A(SW_extend), .B(Q), .value_final(out));
+endmodule
+
+module compButton_testbench();
+	logic out;
+	logic Clock, Reset;
+	logic [9:0] Q;
+	logic [8:0] SW;
+	logic [9:0] SW_extend;
+	
+	compButton dut(.Clock, .Reset, .Q, .SW, .out);
+	
+	parameter CLOCK_PERIOD = 100;
+	initial begin
+		Clock <= 0;
+		forever #(CLOCK_PERIOD / 2) 
+		Clock <= ~Clock;
+	end
+	
+	initial begin
+		Reset <= 1;											@(posedge Clock);
+																@(posedge Clock);
+		Reset <= 0;											@(posedge Clock);
+																@(posedge Clock);
+		Q = 10'b0000000001;	SW = 9'b000000010;	@(posedge Clock);
+																@(posedge Clock);
+		Q = 10'b0000000011;								@(posedge Clock);
+																@(posedge Clock);
+		$stop;
+	end
+endmodule

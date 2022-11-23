@@ -1,0 +1,7 @@
+module decoder (switch, enable, out);
+ input logic [3:0] switch;
+ input logic enable;
+ output logic [15:0] out;
+ 
+ assign out = {16{enable}} & (1'b1 << switch);
+endmodule

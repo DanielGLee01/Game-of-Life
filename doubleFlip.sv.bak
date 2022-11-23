@@ -1,0 +1,15 @@
+module doubleFlip (Clock, Reset, KEY, wireout);
+ input logic Clock, Reset;
+ input logic [3:0] KEY;
+ output logic wireout;
+
+ logic out_ff1;
+
+	always_ff @(posedge clk) begin
+		out_ff1 <= [3:0]KEY;
+	end
+	
+	always_ff @(posedge clk) begin
+		out <= out_ff1;
+	end
+endmodule

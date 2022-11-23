@@ -1,0 +1,134 @@
+module DE1_SoC (HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, SW, LEDR, GPIO_1, CLOCK_50);
+    output logic [6:0]  HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
+	 output logic [9:0]  LEDR;
+    input  logic [3:0]  KEY;
+    input  logic [9:0]  SW;
+    output logic [35:0] GPIO_1;
+    input logic CLOCK_50;
+
+ logic reset, out;
+ 	 logic [31:0] clk;
+	 logic SYSTEM_CLOCK;
+ 
+  doubleFF d_ff (.clk(SYSTEM_CLOCK), .reset, .key(~KEY[0]), .out(reset));
+ 
+ 	 // Turn off HEX displays
+    assign HEX0 = '1;
+    assign HEX1 = '1;
+    assign HEX2 = '1;
+    assign HEX3 = '1;
+    assign HEX4 = '1;
+    assign HEX5 = '1;
+	 assign LEDR = 10'b0000000000;
+	 
+	 
+
+	 
+	 clock_divider divider (.reset, .clock(CLOCK_50), .divided_clocks(clk));
+	 
+	 //assign SYSTEM_CLOCK = clk[14]; // 1526 Hz clock signal
+	 assign SYSTEM_CLOCK = CLOCK_50; // 1526 Hz clock signal
+	 
+	 logic [15:0][15:0]DOT; // 16 x 16 array representing red LEDs
+    logic [15:0][15:0]GrnPixels; // 16 x 16 array representing green LEDs
+	 logic [15:0][15:0]temp;
+	 logic [15:0][15:0]temp1;
+	 assign GrnPixels = {16'b0, 16'b0, 16'b0, 16'b0, 16'b0, 16'b0,16'b0, 16'b0,
+								16'b0, 16'b0, 16'b0, 16'b0, 16'b0, 16'b0,16'b0, 16'b0};
+ 
+ 
+ 
+
+ 
+ LEDDriver Driver (.CLK(SYSTEM_CLOCK), .RST(reset), .EnableCount(1'b1), .RedPixels(DOT), .GrnPixels, .GPIO_1);
+  
+  
+
+	loadGame game (.Clock(SYSTEM_CLOCK), .reset(reset), .A(DOT), .sw(SW), .DOT(temp));
+	
+	//assign runClk	= clk[25];
+	assign runClk	= CLOCK_50;
+	
+	always_comb begin
+	 if (~SW[9]) 
+		DOT <= temp;
+	 else
+		DOT <= temp1;
+	end
+ 
+ genvar i, j;
+ generate
+  for (i = 0; i < 16; i++) begin : genRow
+   for (j = 0; j < 16; j++) begin : genColumn
+    //dotController dot (.Clock(Clock), .A(A), .RE(RE[i]), .CE(CE[j]), .NINE(SW[9]), .Q(DOT[i][j]));
+	 gameplay play (.Clock(runClk), .neighbor({DOT[(i+15)%16][(j+15)%16], DOT[(i+15)%16][j], DOT[(i+15)%16][(j+1)%16],
+	 DOT[i][(j+15)%16], DOT[i][(j+1)%16], 
+	 DOT[(i+1)%16][(j+15)%16], DOT[(i+1)%16][j], DOT[(i+1)%16][(j+1)%16]}),
+	 .health(temp1[i][j]), .reset);
+   end
+  end
+ endgenerate
+ 
+ 	 
+endmodule
+
+
+module DE1_SoC_testbench();
+ logic 		CLOCK_50;
+ logic [6:0] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5;
+ logic [9:0] LEDR;
+ logic [3:0] KEY;
+ logic [9:0] SW;
+ logic [35:0] GPIO_1;
+	
+ DE1_SoC dut (.HEX0, .HEX1, .HEX2, .HEX3, .HEX4, .HEX5, .KEY, .SW, .LEDR, .GPIO_1, .CLOCK_50);
+	
+ parameter CLOCK_PERIOD = 100;
+ initial begin
+	 CLOCK_50 <= 0;
+	 forever #(CLOCK_PERIOD / 2)
+	 CLOCK_50 <= ~CLOCK_50;
+ end
+	
+	initial begin
+	SW <= 10'b1000001000; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+   SW <= 10'b0;			KEY[0] <= 0;				@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+	KEY[0] <= 1;										   @(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+	SW <= 10'b0100000000; 	            			@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0100001111; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0111110000; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0111111111; 							   @(posedge CLOCK_50);
+															   @(posedge CLOCK_50);
+	SW <= 10'b0101000100; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0101110111; 		                  @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0101111000; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0110000111; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b0110001000; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+	SW <= 10'b1000000000; 							   @(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+   															@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+																@(posedge CLOCK_50);
+		$stop;
+	end
+endmodule
